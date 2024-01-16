@@ -1,20 +1,37 @@
-import axios from 'axios';
-import { userProps } from 'utils/interface';
+import APIConfig from 'utils/APIConfig';
+import { POST } from 'utils/url';
 
-export const signUp = async (data: userProps) => {
-    try {
-        const res = await axios.post('http://localhost:3010/api/sign-up', data);
-        return res.data;
-    } catch (err: any) {
-        console.error(new Error(err.message));
-    }
+export const loginApi = ({
+    firstName,
+    lastName,
+    password,
+    email,
+}: {
+    firstName: string;
+    lastName: string;
+    password: string;
+    email: string;
+}) => {
+    return POST({
+        url: APIConfig.SIGNUP,
+        params: {
+            firstName,
+            lastName,
+            password,
+            email,
+        },
+    }).then((data: any) => {
+        return data;
+    });
 };
 
-export const signIn = async (data: userProps) => {
-    try {
-        const res = await axios.post('http://localhost:3010/api/sign-in', data);
-        return res.data;
-    } catch (err: any) {
-        console.error(new Error(err.message));
-    }
+export const getUserInfoApi = ({ email }: { email: string }) => {
+    return POST({
+        url: APIConfig.GET_USER_INFO,
+        params: {
+            email,
+        },
+    }).then((data: any) => {
+        return data;
+    });
 };
